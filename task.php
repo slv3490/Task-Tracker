@@ -41,8 +41,8 @@ function addTask($description) {
     "id" => newId($id),
     "description" => $description,
     "status" => 0,
-    "created_at" => date("Y-m-d"),
-    "updated_at" => date("Y-m-d")
+    "created_at" => date('l jS \of F Y h:i:s A'),
+    "updated_at" => date('l jS \of F Y h:i:s A')
   ];
   
   $array[] = $newTask;
@@ -82,6 +82,7 @@ function updateContent($id, $key, $value, $message) {
   foreach ($array as $task) {
     if($task->id === $id) {
       $task->$key = $value;
+      $task->updated_at = date('l jS \of F Y h:i:s A');
 
       // Encode to JSON
       $json_data = json_encode($array, JSON_PRETTY_PRINT);
