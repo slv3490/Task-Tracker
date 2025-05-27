@@ -9,7 +9,7 @@ if($argv[1] === "add") {
   addTask($argv[2]);
 
 } else if($argv[1] === "list") {
-  
+
   getAllTasks("list", $argv[2] = "");
 
 } else if($argv[1] === "update") {
@@ -22,10 +22,11 @@ if($argv[1] === "add") {
 
 } else if($argv[1] === "mark-in-progress") {
 
-  deleteTask(intval($argv[2]));
+  markInProgress(intval($argv[2]));
+
 } else if($argv[1] === "mark-done") {
 
-  deleteTask(intval($argv[2]));
+  markDone(intval($argv[2]));
 }
 
 function addTask($description) {
@@ -55,6 +56,7 @@ function addTask($description) {
   echo "Data Saved";
 }
 
+// TODO
 function getAllTasks() {
   $file = file_get_contents("datos.json");
   echo "Getting all the tasks \n\n";
@@ -62,12 +64,24 @@ function getAllTasks() {
 }
 
 function updateTask($id, $description) {
+  updateContent($id, "description", $description, "La tarea se actualizo correctamente");
+}
+
+function markInProgress($id) {
+  updateContent($id, "status", 0, "La tarea se cambio a: Pendiente");
+}
+
+function markDone($id) {
+  updateContent($id, "status", 1, "La tarea se cambio a: Completada");
+}
+
+function updateContent($id, $key, $value, $message) {
   $file = file_get_contents("datos.json");
   $array = json_decode($file);
 
   foreach ($array as $task) {
     if($task->id === $id) {
-      $task->description = $description;
+      $task->$key = $value;
 
       // Encode to JSON
       $json_data = json_encode($array, JSON_PRETTY_PRINT);
@@ -75,18 +89,18 @@ function updateTask($id, $description) {
       // Write in the file
       file_put_contents("datos.json", $json_data);
       
-      echo "Data Updated";
+      echo $message;
     }
   }
 }
 
 function deleteTask($id) {
   $file = file_get_contents("datos.json");
-  $array = json_decode($file, true); // ← TRUE para obtener array asociativo
+  $array = json_decode($file);
 
   // Filtrar las tareas que no coincidan con el ID
   $filtered = array_filter($array, function ($task) use ($id) {
-    return $task['id'] !== $id;
+    return $task->id !== $id;
   });
 
   // Reindexar los índices del array (opcional)
@@ -95,7 +109,5 @@ function deleteTask($id) {
   // Guardar el nuevo array en el archivo
   file_put_contents("datos.json", json_encode($filtered, JSON_PRETTY_PRINT));
 
-  echo "✅ Tarea con ID $id eliminada.\n";
+  echo "Tarea con ID $id eliminada.\n";
 }
-
-
