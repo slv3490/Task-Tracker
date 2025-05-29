@@ -81,7 +81,7 @@ Output: Getting tasks: in progress
 ## 📂 Estructura del Proyecto
 
 ```
-rastreador-tareas/
+task-tracker/
 │
 ├── datos.json     # Archivo donde se almacenan las tareas
 ├── task.php       # Script principal de la aplicación
