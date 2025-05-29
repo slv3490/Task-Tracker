@@ -10,7 +10,8 @@ if($argv[1] === "add") {
 
 } else if($argv[1] === "list") {
 
-  getAllTasks("list", $argv[2] = "");
+  $status = $argv[2] ?? "";
+  getAllTasks($status);
 
 } else if($argv[1] === "update") {
 
@@ -56,9 +57,34 @@ function addTask($description) {
   echo "Data Saved";
 }
 
-// TODO
-function getAllTasks() {
+// TODO: Agregar el listado por filtro de estado
+function getAllTasks($args) {
   $file = file_get_contents("datos.json");
+  $array = json_decode($file);
+  
+  if($args === "done") {
+
+    foreach ($array as $task) {
+      if($task->status === 1) {
+        $json_data = json_encode($task, JSON_PRETTY_PRINT);
+        echo "Getting tasks: done \n\n";
+        echo $json_data;
+      }
+    }
+    return;
+
+  } else if ($args === "in-progress") {
+
+    foreach ($array as $task) {
+      if($task->status === 0) {
+        $json_data = json_encode($task, JSON_PRETTY_PRINT);
+        echo "Getting tasks: in progress \n\n";
+        echo $json_data;
+      }
+    }
+    return;
+
+  }
   echo "Getting all the tasks \n\n";
   echo $file;
 }
