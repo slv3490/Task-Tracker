@@ -1,9 +1,10 @@
 <?php
-include "functions.php";
-
+// Crea el archivo si es que no existe
 if(!is_file("datos.json")) {
   file_put_contents("datos.json", json_encode([]));
 }
+
+//Cambiar por un Switch
 // Add Task
 if($argv[1] === "add") {
   addTask($argv[2]);
@@ -39,7 +40,7 @@ function addTask($description) {
   $id = end($array)->id ?? 0;
   
   $newTask = [
-    "id" => newId($id),
+    "id" => $id + 1,
     "description" => $description,
     "status" => 0,
     "created_at" => date('l jS \of F Y h:i:s A'),
@@ -54,7 +55,7 @@ function addTask($description) {
   // Write in the file
   file_put_contents("datos.json", $json_data);
   
-  echo "Data Saved";
+  echo "Task added successfully (ID:" . $id + 1 . ")";
 }
 
 // TODO: Agregar el listado por filtro de estado
@@ -90,15 +91,15 @@ function getTasks($args) {
 }
 
 function updateTask($id, $description) {
-  updateContent($id, "description", $description, "La tarea se actualizo correctamente");
+  updateContent($id, "description", $description, "The task was updated successfully");
 }
 
 function markInProgress($id) {
-  updateContent($id, "status", 0, "La tarea se cambio a: Pendiente");
+  updateContent($id, "status", 0, "The task was changed to: Pending");
 }
 
 function markDone($id) {
-  updateContent($id, "status", 1, "La tarea se cambio a: Completada");
+  updateContent($id, "status", 1, "The task was changed to: Completed");
 }
 
 function updateContent($id, $key, $value, $message) {
@@ -136,5 +137,5 @@ function deleteTask($id) {
   // Guardar el nuevo array en el archivo
   file_put_contents("datos.json", json_encode($filtered, JSON_PRETTY_PRINT));
 
-  echo "Tarea con ID $id eliminada.\n";
+  echo "Task with ID ${id} has been deleted\n";
 }

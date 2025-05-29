@@ -33,5 +33,12 @@
         "status": 1,
         "created_at": "Tuesday 27th of May 2025 01:28:14 PM",
         "updated_at": "Thursday 29th of May 2025 07:49:38 AM"
+    },
+    {
+        "id": 6,
+        "description": "Finalizar el proyecto",
+        "status": 0,
+        "created_at": "Thursday 29th of May 2025 07:52:54 AM",
+        "updated_at": "Thursday 29th of May 2025 07:52:54 AM"
     }
 ]
