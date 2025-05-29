@@ -11,7 +11,7 @@ if($argv[1] === "add") {
 } else if($argv[1] === "list") {
 
   $status = $argv[2] ?? "";
-  getAllTasks($status);
+  getTasks($status);
 
 } else if($argv[1] === "update") {
 
@@ -58,7 +58,7 @@ function addTask($description) {
 }
 
 // TODO: Agregar el listado por filtro de estado
-function getAllTasks($args) {
+function getTasks($args) {
   $file = file_get_contents("datos.json");
   $array = json_decode($file);
   
