@@ -4,31 +4,25 @@ if(!is_file("datos.json")) {
   file_put_contents("datos.json", json_encode([]));
 }
 
-//Cambiar por un Switch
-// Add Task
-if($argv[1] === "add") {
-  addTask($argv[2]);
+$command = $argv[1] ?? '';
 
-} else if($argv[1] === "list") {
-
-  $status = $argv[2] ?? "";
-  getTasks($status);
-
-} else if($argv[1] === "update") {
-
-  updateTask(intval($argv[2]), $argv[3]);
-
-} else if($argv[1] === "delete") {
-
-  deleteTask(intval($argv[2]));
-
-} else if($argv[1] === "mark-in-progress") {
-
-  markInProgress(intval($argv[2]));
-
-} else if($argv[1] === "mark-done") {
-
-  markDone(intval($argv[2]));
+switch ($command) {
+    case 'add':
+        addTask($argv[2]); break;
+    case 'list':
+        $status = $argv[2] ?? "";
+        getTasks($status); break;
+    case 'update':
+        updateTask(intval($argv[2]), $argv[3]); break;
+    case 'delete':
+        deleteTask(intval($argv[2])); break;
+    case 'mark-in-progress':
+        markInProgress(intval($argv[2])); break;
+    case 'mark-done':
+        markDone(intval($argv[2])); break;
+    default:
+        echo "Commands: add, list, update, delete, mark-in-progress, mark-done\n";
+        break;
 }
 
 function addTask($description) {
